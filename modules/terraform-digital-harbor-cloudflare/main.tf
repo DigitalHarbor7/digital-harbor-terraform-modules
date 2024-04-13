@@ -75,3 +75,17 @@ resource "cloudflare_pages_domain" "cf_domain" {
   domain       = var.domain
 }
 
+resource "cloudflare_pages_domain" "cf_domain_develop" {
+  account_id   = local.account_id
+  project_name = cloudflare_pages_project.build_config.name
+  domain       = "develop.${var.domain}"
+}
+
+resource "cloudflare_pages_domain" "cf_domain_www" {
+  account_id   = local.account_id
+  project_name = cloudflare_pages_project.build_config.name
+  domain       = "www.${var.domain}"
+}
+
+
+
