@@ -1,5 +1,5 @@
 output "cloudflare_zone_name_servers" {
-  value = length(cloudflare_zone.zone) > 0 ? cloudflare_zone.zone.name_servers : null
+  value = length(cloudflare_zone.zone) > 0 ? cloudflare_zone.zone[0].name_servers : null
   # value = cloudflare_zone.zone.name_servers
 }
 
