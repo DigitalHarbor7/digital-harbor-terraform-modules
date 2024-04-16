@@ -31,7 +31,7 @@ resource "cloudflare_record" "cf_domain_record_develop" {
 resource "cloudflare_record" "cf_domain_record_www" {
   count = var.domain != "" ? 1 : 0
 
-  zone_id         = cloudflare_zone.zone.id
+  zone_id         = cloudflare_zone.zone[0].id
   name            = "www"
   value           = "${replace(var.domain, ".", "-")}.pages.dev"
   type            = "CNAME"
@@ -43,7 +43,7 @@ resource "cloudflare_record" "cf_domain_record_www" {
 resource "cloudflare_record" "cf_domain_record" {
   count = var.domain != "" ? 1 : 0
 
-  zone_id         = cloudflare_zone.zone.id
+  zone_id         = cloudflare_zone.zone[0].id
   name            = var.domain
   value           = "${replace(var.domain, ".", "-")}.pages.dev"
   type            = "CNAME"
@@ -77,6 +77,8 @@ resource "cloudflare_pages_project" "build_config" {
   }
 }
 resource "cloudflare_pages_domain" "cf_domain" {
+  count = var.domain != "" ? 1 : 0
+
   # account_id = data.cloudflare_accounts.cloudflare_account_data.id
   account_id   = local.account_id
   project_name = cloudflare_pages_project.build_config.name
@@ -84,12 +86,16 @@ resource "cloudflare_pages_domain" "cf_domain" {
 }
 
 resource "cloudflare_pages_domain" "cf_domain_develop" {
+  count = var.domain != "" ? 1 : 0
+
   account_id   = local.account_id
   project_name = cloudflare_pages_project.build_config.name
   domain       = "develop.${var.domain}"
 }
 
 resource "cloudflare_pages_domain" "cf_domain_www" {
+  count = var.domain != "" ? 1 : 0
+
   account_id   = local.account_id
   project_name = cloudflare_pages_project.build_config.name
   domain       = "www.${var.domain}"
