@@ -21,7 +21,7 @@ resource "cloudflare_record" "cf_domain_record_develop" {
 
   zone_id         = cloudflare_zone.zone[0].id
   name            = "develop"
-  value           = "develop.${replace(var.domain, ".", "-")}.pages.dev"
+  value           = "develop.${var.cloudflare_pages_name}.pages.dev"
   type            = "CNAME"
   proxied         = true
   ttl             = 1
@@ -33,7 +33,7 @@ resource "cloudflare_record" "cf_domain_record_www" {
 
   zone_id         = cloudflare_zone.zone[0].id
   name            = "www"
-  value           = "${replace(var.domain, ".", "-")}.pages.dev"
+  value           = "${var.cloudflare_pages_name}.pages.dev"
   type            = "CNAME"
   proxied         = true
   ttl             = 1
@@ -45,7 +45,7 @@ resource "cloudflare_record" "cf_domain_record" {
 
   zone_id         = cloudflare_zone.zone[0].id
   name            = var.domain
-  value           = "${replace(var.domain, ".", "-")}.pages.dev"
+  value           = "${var.cloudflare_pages_name}.pages.dev"
   type            = "CNAME"
   proxied         = true
   ttl             = 1
@@ -57,7 +57,7 @@ resource "cloudflare_pages_project" "build_config" {
   # account_id = data.cloudflare_accounts.cloudflare_account_data.id
   account_id = local.account_id
 
-  name              = replace(var.domain, ".", "-")
+  name              = var.cloudflare_pages_name
   production_branch = "main"
   source {
     type = "github"
