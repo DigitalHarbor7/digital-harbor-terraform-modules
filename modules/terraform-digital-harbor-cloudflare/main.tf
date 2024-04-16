@@ -91,7 +91,7 @@ resource "cloudflare_pages_domain" "cf_domain_develop" {
 
   account_id   = local.account_id
   project_name = cloudflare_pages_project.build_config.name
-  domain       = var.domain != "" ? "develop.${var.domain}" : null
+  domain       = coalesce(var.domain, "") != "" ? "develop.${var.domain}" : null
 }
 
 resource "cloudflare_pages_domain" "cf_domain_www" {
@@ -99,7 +99,7 @@ resource "cloudflare_pages_domain" "cf_domain_www" {
 
   account_id   = local.account_id
   project_name = cloudflare_pages_project.build_config.name
-  domain       = var.domain != "" ? "www.${var.domain}" : null
+  domain       = coalesce(var.domain, "") != "" ? "www.${var.domain}" : null
 }
 
 
