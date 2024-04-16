@@ -1,4 +1,4 @@
-variable "domain" {}
+variable "domain" { default = "" }
 variable "cloudflare_pages_name" {}
 variable "cloudflare_account_name" {}
 variable "cloudflare_account_id" {}
