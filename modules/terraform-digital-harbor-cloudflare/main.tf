@@ -19,7 +19,7 @@ resource "cloudflare_zone" "zone" {
 resource "cloudflare_record" "cf_domain_record_develop" {
   count = var.domain != "" ? 1 : 0
 
-  zone_id         = cloudflare_zone.zone.id
+  zone_id         = cloudflare_zone.zone[0].id
   name            = "develop"
   value           = "develop.${replace(var.domain, ".", "-")}.pages.dev"
   type            = "CNAME"
