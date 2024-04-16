@@ -9,12 +9,16 @@ locals {
 }
 
 resource "cloudflare_zone" "zone" {
+  count = var.domain != "" ? 1 : 0
+
   # account_id = data.cloudflare_accounts.cloudflare_account_data.id
   account_id = local.account_id
   zone       = var.domain
 }
 
 resource "cloudflare_record" "cf_domain_record_develop" {
+  count = var.domain != "" ? 1 : 0
+
   zone_id         = cloudflare_zone.zone.id
   name            = "develop"
   value           = "develop.${replace(var.domain, ".", "-")}.pages.dev"
@@ -25,6 +29,8 @@ resource "cloudflare_record" "cf_domain_record_develop" {
 }
 
 resource "cloudflare_record" "cf_domain_record_www" {
+  count = var.domain != "" ? 1 : 0
+
   zone_id         = cloudflare_zone.zone.id
   name            = "www"
   value           = "${replace(var.domain, ".", "-")}.pages.dev"
@@ -35,6 +41,8 @@ resource "cloudflare_record" "cf_domain_record_www" {
 }
 
 resource "cloudflare_record" "cf_domain_record" {
+  count = var.domain != "" ? 1 : 0
+
   zone_id         = cloudflare_zone.zone.id
   name            = var.domain
   value           = "${replace(var.domain, ".", "-")}.pages.dev"
