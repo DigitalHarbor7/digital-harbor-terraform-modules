@@ -13,7 +13,7 @@ resource "cloudflare_zone" "zone" {
 
   # account_id = data.cloudflare_accounts.cloudflare_account_data.id
   account_id = local.account_id
-  zone       = var.domain
+  zone       = var.domain != "" ? var.domain : null
 }
 
 resource "cloudflare_record" "cf_domain_record_develop" {
@@ -43,8 +43,9 @@ resource "cloudflare_record" "cf_domain_record_www" {
 resource "cloudflare_record" "cf_domain_record" {
   count = var.domain != "" ? 1 : 0
 
-  zone_id         = cloudflare_zone.zone[0].id
-  name            = var.domain
+  zone_id = cloudflare_zone.zone[0].id
+  name    = var.domain != "" ? var.domain : null
+
   value           = "${var.cloudflare_pages_name}.pages.dev"
   type            = "CNAME"
   proxied         = true
@@ -82,7 +83,7 @@ resource "cloudflare_pages_domain" "cf_domain" {
   # account_id = data.cloudflare_accounts.cloudflare_account_data.id
   account_id   = local.account_id
   project_name = cloudflare_pages_project.build_config.name
-  domain       = var.domain
+  domain       = var.domain != "" ? var.domain : null
 }
 
 resource "cloudflare_pages_domain" "cf_domain_develop" {
