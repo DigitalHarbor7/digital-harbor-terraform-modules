@@ -1,4 +1,6 @@
 variable "domain" { default = "" }
+variable "production_branch" { default = "pages" }
+variable "preview_branch" { default = "pages-dev" }
 variable "cloudflare_pages_name" {}
 variable "cloudflare_account_name" {}
 variable "cloudflare_account_id" {}

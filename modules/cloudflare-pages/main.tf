@@ -8,14 +8,15 @@ resource "cloudflare_pages_project" "build_config" {
   account_id = local.account_id
 
   name              = var.cloudflare_pages_name
-  production_branch = "main"
+  production_branch = "pages"
   source {
     type = "github"
     config {
       owner                         = var.github_owner
       repo_name                     = var.cloudflare_pages_target_repo
-      production_branch             = "main"
+      production_branch             = var.production_branch
       production_deployment_enabled = true
+      preview_branch_includes       = var.preview_branch
     }
   }
   build_config {
