@@ -21,7 +21,7 @@ resource "cloudflare_record" "cf_domain_record_develop" {
 
   zone_id         = cloudflare_zone.zone[0].id
   name            = "develop"
-  value           = "develop.${var.cloudflare_pages_name}.pages.dev"
+  value           = "pages-dev.${var.cloudflare_pages_name}.pages.dev"
   type            = "CNAME"
   proxied         = true
   ttl             = 1
